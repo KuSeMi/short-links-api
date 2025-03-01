@@ -4,6 +4,7 @@ import (
 	"demo/configs"
 	"demo/internal/auth"
 	"demo/internal/link"
+	"demo/internal/user"
 	"demo/pkg/db"
 	"demo/pkg/middleware"
 	"fmt"
@@ -17,10 +18,15 @@ func main() {
 
 	// Repositories
 	linkRepository := link.NewLinkRepository(db)
+	userRepository := user.NewUserRepository(db)
+
+	// Services
+	authService := auth.NewAuthService(userRepository)
 
 	// Handler
 	auth.NewAuthHandler(router, auth.AuthHandlerDeps{
-		Config: conf,
+		Config:      conf,
+		AuthService: authService,
 	})
 
 	link.NewLinkHandler(router, link.LinkHandlerDeps{
