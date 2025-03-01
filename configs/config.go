@@ -27,17 +27,17 @@ func LoadConfig() *Config {
 	}
 
 	dsn := os.Getenv("DSN")
-	token := os.Getenv("TOKEN")
+	secret := os.Getenv("SECRET")
 
 	log.Printf("Loaded DSN: %s", dsn)
-	log.Printf("Loaded TOKEN: %s", token)
+	log.Printf("Loaded TOKEN: %s", secret)
 
 	return &Config{
 		Db: Dbconfig{
 			Dsn: dsn,
 		},
 		Auth: AuthConfig{
-			Secret: token,
+			Secret: secret,
 		},
 	}
 }
