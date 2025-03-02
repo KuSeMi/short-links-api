@@ -28,9 +28,9 @@ func main() {
 		Config:      conf,
 		AuthService: authService,
 	})
-
 	link.NewLinkHandler(router, link.LinkHandlerDeps{
 		LinkRepository: linkRepository,
+		Config:         conf,
 	})
 
 	// Middlewares
