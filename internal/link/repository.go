@@ -61,3 +61,25 @@ func (repo *LinkRepository) GetById(id uint) (*Link, error) {
 
 	return &link, nil
 }
+
+func (repo *LinkRepository) Count() (int64, error) {
+	var count int64
+	result := repo.Database.DB.Table("links").Where("deleted_at IS NULL").Count(&count)
+	if result.Error != nil {
+		return 0, result.Error
+	}
+
+	return count, nil
+}
+
+func (repo *LinkRepository) GetAll(limit, offser int) ([]Link, error) {
+	var links []Link
+	repo.Database.Table("links").
+		Where("deleted_at IS NULL").
+		Order("id desc").
+		Limit(int(limit)).
+		Offset(int(offser)).
+		Scan(&links)
+
+	return links, nil
+}
